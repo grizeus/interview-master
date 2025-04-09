@@ -1,1 +1,25 @@
-<p>This is test!</p>
+<div>
+  <p>This is test component</p>
+  <p>{{title}}</p>
+  <p>{{getFullName()}}</p>
+
+  <p [ngStyle]="{color: 'red'}">this is Ngstyle</p>
+  <p [ngClass]="{ 'active': isActive, 'disabled': !isDisabled }">this is NgClass</p>
+
+  <!-- property binding -->
+  <button [disabled]="!getIsEnabled()">Click me</button>
+
+  <div class="event-example" [ngClass]="{ 'clicked': isClickedState }">
+    <p>{{isClickedState}}</p>
+  </div>
+
+  <!-- event binding -->
+  <button (click)="toggleState()">Switch state</button>
+
+  <!-- two-way binding -->
+  <input type="text" [(ngModel)]="inputText" placeholder="Enter your name" />
+  <p>Your name is: {{inputText}} !</p>
+
+  <p>{{childMessage}}</p>
+  <button (click)="sendToParent()">Send to father</button>
+</div>

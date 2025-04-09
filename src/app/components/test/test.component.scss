@@ -1,3 +1,65 @@
 p {
-  color: purple;
+  font-weight: 700;
+  color: #2a2a2a;
+}
+
+div {
+  margin: 1rem;
+  padding: 2rem;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  height: 100dvh;
+  justify-content: center;
+  align-items: center;
+  background-color: #e7c8c8;
+}
+
+button {
+  border: none;
+  background-color: hsl(180, 55%, 42%);
+  color: #fbfbfb;
+  padding: 12px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out
+}
+
+
+button:hover,
+button:focus {
+  background-color: hsl(180, 55%, 32%);
+}
+
+button:disabled {
+  color: #e7c8c8;
+  background-color: hsl(180, 15%, 52%);
+  cursor: not-allowed;
+}
+
+.active {
+  background-color: #007bff;
+  color: #fbfbfb;
+}
+
+.disabled {
+  color: #999999;
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+.event-example {
+  width: 200px;
+  height: 100px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  text-align: center;
+  line-height: 100px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.clicked {
+  background-color: #8cb1d9;
+  color: #fbfbfb;
 }
