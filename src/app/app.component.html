@@ -1,3 +1,6 @@
 <p>This is app!</p>
 
-<app-test></app-test>
+<p>{{messageFromChild}}</p>
+
+<!-- descending component communication        ascending component communication -->
+<app-test [childMessage]="messageFromParent" (messageFromChild)="getMessageFromChild($event)"></app-test>
