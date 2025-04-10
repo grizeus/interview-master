@@ -2,12 +2,13 @@ import { CommonModule } from "@angular/common";
 import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { HighlightDirective } from "../../directives/highlight.directive";
+import { TruncatePipe } from "../../pipes/truncate.pipe";
 
 type State = "active" | "paused" | "stopped" | null;
 
 @Component({
   selector: "app-test",
-  imports: [CommonModule, FormsModule, HighlightDirective],
+  imports: [CommonModule, FormsModule, HighlightDirective, TruncatePipe],
   templateUrl: "./test.component.html",
   styleUrl: "./test.component.scss",
 })
@@ -19,7 +20,7 @@ export class TestComponent {
     { "id": 4, "name": "kiwi" },
     { "id": 5, "name": "elderberry" },
   ];
-
+  today = new Date();
   appState: State = "paused";
 
   title: string = "This is interpolation";
