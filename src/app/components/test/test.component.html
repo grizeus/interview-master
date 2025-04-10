@@ -1,69 +1,20 @@
-<div>
-  <!-- <p>This is test component</p>
-  <p>{{title}}</p>
-  <p>{{getFullName()}}</p>
+<div class="todo-app">
+  <div class="todo-container">
+    <div class="todo-input-container">
+      <input [(ngModel)]="newTask" placeholder="Add a task..." class="todo-input" />
+      <button (click)="addTask()" class="btn add-button">Add</button>
+      <button (click)="clearTasks()" class="btn clear-button">Clear</button>
+    </div>
 
-  <p [ngStyle]="{color: 'red'}">this is Ngstyle</p>
-  <p [ngClass]="{ 'active': isActive, 'disabled': !isDisabled }">this is NgClass</p> -->
-
-  <!-- property binding -->
-  <!-- <button [disabled]="!getIsEnabled()">Click me</button>
-
-  <div class="event-example" [ngClass]="{ 'clicked': isClickedState }">
-    <p>{{isClickedState}}</p>
-  </div> -->
-
-  <!-- event binding -->
-  <!-- <button (click)="toggleState()">Switch state</button> -->
-
-  <!-- two-way binding -->
-  <!-- <input type="text" [(ngModel)]="inputText" placeholder="Enter your name" />
-  <p>Your name is: {{inputText}} !</p>
-
-  <p>{{childMessage}}</p>
-  <button (click)="sendToParent()">Send to father</button> -->
-
-  <!-- directive -->
-  <p appHighlight [highlightColor]="'gray'">Hover over to see the effect</p>
-
-  @if (isClickedState) {
-    <p>Button was pressed</p>
-  } @else {
-    <p>Button hasn't pressed yet</p>
-  }
-
-  <button (click)="toggleState()">Switch state</button>
-
-  <ul>
-    @for (item of items; track item.id; let i = $index, c = $count, e = $even) {
-      <li>Fruit no.{{i + 1}} of {{c}}: {{item.name}}</li>
-    } @empty {
-      <li>There are no items</li>
-    }
-  </ul>
-
-  @switch (appState) {
-    @case ("active") {
-      <p>The app is active</p>
-    }
-    @case ("paused") {
-      <p>The app is inactive</p>
-    }
-    @default {
-      <p>The app is in unknown state</p>
-    }
-  }
-
-  <!-- built-in pipes -->
-  <p>{{today}}</p>
-  <p>{{today | date:"shortDate"}}</p>
-  <p>{{"hello world" | uppercase}}</p>
-  <p>{{"HELLO WORLD" | lowercase}}</p>
-  <p>{{1500.5 | currency}}</p>
-  <p>{{1.234567898 | number}}</p>
-  <p>{{0.5 | percent}}</p>
-  <p>{{"Hello World" | slice:1:5}}</p>
-  <p>{{{"name": "John", "age": 30} | json}}</p>
-
-  <p>{{"Long text need to be truncated" | truncate:18}}</p>
+    <div class="todo-list">
+      @for (task of tasks; track task; let i = $index) {
+      <li>
+        {{task}}
+        <button (click)="removeTask(i)" class="remove-button">Remove</button>
+      </li>
+      } @empty {
+      <li>No tasks</li>
+      }
+    </div>
+  </div>
 </div>

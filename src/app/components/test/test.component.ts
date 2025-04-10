@@ -1,54 +1,51 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { HighlightDirective } from "../../directives/highlight.directive";
-import { TruncatePipe } from "../../pipes/truncate.pipe";
+import { TodoService } from "../../services/todo.service";
 
 type State = "active" | "paused" | "stopped" | null;
 
 @Component({
   selector: "app-test",
-  imports: [CommonModule, FormsModule, HighlightDirective, TruncatePipe],
+  imports: [CommonModule, FormsModule],
   templateUrl: "./test.component.html",
   styleUrl: "./test.component.scss",
 })
-export class TestComponent {
-  items = [
-    { "id": 1, "name": "apple" },
-    { "id": 2, "name": "banana" },
-    { "id": 3, "name": "orange" },
-    { "id": 4, "name": "kiwi" },
-    { "id": 5, "name": "elderberry" },
-  ];
-  today = new Date();
-  appState: State = "paused";
+export class TestComponent implements OnInit {
+  newTask: string = "";
+  tasks: string[] = [];
 
-  title: string = "This is interpolation";
-  firstName: string = "John";
-  lastName: string = "Doe";
+  // add service with constructor
+  // constructor(private todoService: TodoService) { }
 
-  private isEnabled: boolean = true;
-  isActive: boolean = true;
-  isDisabled: boolean = false;
-  isClickedState = false;
-  inputText: string = "";
+  constructor() { }
 
-  @Input() childMessage: string = "";
-  @Output() messageFromChild = new EventEmitter<string>();
+  // add service with inject
+  private todoService = inject(TodoService);
 
-  getIsEnabled() {
-    return this.isEnabled;
+  ngOnInit(): void {
+    this.tasks = this.todoService.getTasks();
   }
 
-  getFullName() {
-    return `My name is ${this.firstName} ${this.lastName}`;
+  addTask() {
+    if (this.newTask.trim() !== "") {
+      this.todoService.addTask(this.newTask.trim());
+      this.newTask = "";
+      this.updateTasks();
+    }
   }
 
-  toggleState() {
-    this.isClickedState = !this.isClickedState;
+  removeTask(index: number) {
+    this.todoService.removeTask(index);
+    this.updateTasks();
   }
 
-  sendToParent() {
-    this.messageFromChild.emit("I'm your son");
+  clearTasks() {
+    this.todoService.clearTasks();
+    this.updateTasks();
+  }
+
+  private updateTasks() {
+    this.tasks = this.todoService.getTasks();
   }
 }
