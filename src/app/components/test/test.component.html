@@ -1,25 +1,56 @@
 <div>
-  <p>This is test component</p>
+  <!-- <p>This is test component</p>
   <p>{{title}}</p>
   <p>{{getFullName()}}</p>
 
   <p [ngStyle]="{color: 'red'}">this is Ngstyle</p>
-  <p [ngClass]="{ 'active': isActive, 'disabled': !isDisabled }">this is NgClass</p>
+  <p [ngClass]="{ 'active': isActive, 'disabled': !isDisabled }">this is NgClass</p> -->
 
   <!-- property binding -->
-  <button [disabled]="!getIsEnabled()">Click me</button>
+  <!-- <button [disabled]="!getIsEnabled()">Click me</button>
 
   <div class="event-example" [ngClass]="{ 'clicked': isClickedState }">
     <p>{{isClickedState}}</p>
-  </div>
+  </div> -->
 
   <!-- event binding -->
-  <button (click)="toggleState()">Switch state</button>
+  <!-- <button (click)="toggleState()">Switch state</button> -->
 
   <!-- two-way binding -->
-  <input type="text" [(ngModel)]="inputText" placeholder="Enter your name" />
+  <!-- <input type="text" [(ngModel)]="inputText" placeholder="Enter your name" />
   <p>Your name is: {{inputText}} !</p>
 
   <p>{{childMessage}}</p>
-  <button (click)="sendToParent()">Send to father</button>
+  <button (click)="sendToParent()">Send to father</button> -->
+
+  <!-- directive -->
+  <p appHighlight [highlightColor]="'gray'">Hover over to see the effect</p>
+
+  @if (isClickedState) {
+    <p>Button was pressed</p>
+  } @else {
+    <p>Button hasn't pressed yet</p>
+  }
+
+  <button (click)="toggleState()">Switch state</button>
+
+  <ul>
+    @for (item of items; track item.id; let i = $index, c = $count, e = $even) {
+      <li>Fruit no.{{i + 1}} of {{c}}: {{item.name}}</li>
+    } @empty {
+      <li>There are no items</li>
+    }
+  </ul>
+
+  @switch (appState) {
+    @case ("active") {
+      <p>The app is active</p>
+    }
+    @case ("paused") {
+      <p>The app is inactive</p>
+    }
+    @default {
+      <p>The app is in unknown state</p>
+    }
+  }
 </div>
