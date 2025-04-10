@@ -53,4 +53,17 @@
       <p>The app is in unknown state</p>
     }
   }
+
+  <!-- built-in pipes -->
+  <p>{{today}}</p>
+  <p>{{today | date:"shortDate"}}</p>
+  <p>{{"hello world" | uppercase}}</p>
+  <p>{{"HELLO WORLD" | lowercase}}</p>
+  <p>{{1500.5 | currency}}</p>
+  <p>{{1.234567898 | number}}</p>
+  <p>{{0.5 | percent}}</p>
+  <p>{{"Hello World" | slice:1:5}}</p>
+  <p>{{{"name": "John", "age": 30} | json}}</p>
+
+  <p>{{"Long text need to be truncated" | truncate:18}}</p>
 </div>
