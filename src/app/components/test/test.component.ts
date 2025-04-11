@@ -1,51 +1,76 @@
 import { CommonModule } from "@angular/common";
-import { Component, inject, OnInit } from "@angular/core";
-import { FormsModule } from "@angular/forms";
-import { TodoService } from "../../services/todo.service";
+import { Component } from "@angular/core";
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from "@angular/forms";
 
 type State = "active" | "paused" | "stopped" | null;
 
 @Component({
   selector: "app-test",
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: "./test.component.html",
   styleUrl: "./test.component.scss",
 })
-export class TestComponent implements OnInit {
-  newTask: string = "";
-  tasks: string[] = [];
-
-  // add service with constructor
-  // constructor(private todoService: TodoService) { }
-
-  constructor() { }
-
-  // add service with inject
-  private todoService = inject(TodoService);
-
-  ngOnInit(): void {
-    this.tasks = this.todoService.getTasks();
+export class TestComponent {
+  // custom validator
+  ageValidator(control: AbstractControl): ValidationErrors | null {
+    const val = control.value;
+    const isValidAge = val >= 18 && val <= 120;
+    return isValidAge ? null : { ageInvalid: "Age must be between 18 and 120" };
   }
 
-  addTask() {
-    if (this.newTask.trim() !== "") {
-      this.todoService.addTask(this.newTask.trim());
-      this.newTask = "";
-      this.updateTasks();
-    }
+  forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const forbidden = nameRe.test(control.value);
+      return forbidden ? { forbiddenName: { value: control.value } } : null;
+    };
   }
 
-  removeTask(index: number) {
-    this.todoService.removeTask(index);
-    this.updateTasks();
+  complexForm = new FormGroup({
+    name: new FormControl("", [
+      Validators.required,
+      Validators.minLength(2),
+      this.forbiddenNameValidator(/bob/i),
+    ]),
+    email: new FormControl("", [Validators.required, Validators.email]),
+    age: new FormControl(null, [Validators.required, this.ageValidator]),
+    password: new FormControl("", [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
+    consent: new FormControl(false, Validators.requiredTrue),
+  });
+
+  onSubmit() {
+    console.warn(this.complexForm.value);
   }
 
-  clearTasks() {
-    this.todoService.clearTasks();
-    this.updateTasks();
+  // getters
+  get name() {
+    return this.complexForm.get("name");
   }
 
-  private updateTasks() {
-    this.tasks = this.todoService.getTasks();
+  get email() {
+    return this.complexForm.get("email");
+  }
+
+  get age() {
+    return this.complexForm.get("age");
+  }
+
+  get password() {
+    return this.complexForm.get("password");
+  }
+
+  get consent() {
+    return this.complexForm.get("consent");
   }
 }
