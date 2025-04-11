@@ -1,20 +1,48 @@
-<div class="todo-app">
-  <div class="todo-container">
-    <div class="todo-input-container">
-      <input [(ngModel)]="newTask" placeholder="Add a task..." class="todo-input" />
-      <button (click)="addTask()" class="btn add-button">Add</button>
-      <button (click)="clearTasks()" class="btn clear-button">Clear</button>
-    </div>
+<div>
+  <div class="container">
+    <form [formGroup]="complexForm" (ngSubmit)="onSubmit()">
+      <p>Fill out the form below to submit</p>
+      <div>
+        <label for="name">Name</label>
+        <input type="text" formControlName="name" />
+        @if (name?.invalid && name?.touched) {
+          <div class="error">This value is invalid</div>
+        }
+      </div>
 
-    <div class="todo-list">
-      @for (task of tasks; track task; let i = $index) {
-      <li>
-        {{task}}
-        <button (click)="removeTask(i)" class="remove-button">Remove</button>
-      </li>
-      } @empty {
-      <li>No tasks</li>
-      }
-    </div>
+      <div>
+        <label for="email">Email</label>
+        <input type="email" formControlName="email" />
+        @if (email?.invalid && email?.touched) {
+          <div class="error">This value is invalid</div>
+        }
+      </div>
+
+      <div>
+        <label for="age">Age</label>
+        <input type="number" formControlName="age" />
+        @if (age?.invalid && age?.touched) {
+          <div class="error">This value is invalid</div>
+        }
+      </div>
+
+      <div>
+        <label for="password">Password</label>
+        <input type="password" formControlName="password" />
+        @if (password?.invalid && password?.touched) {
+          <div class="error">This value is invalid</div>
+        }
+      </div>
+
+      <div>
+        <label for="consent">I agree to the terms and conditions</label>
+        <input type="checkbox" formControlName="consent" />
+        @if (consent?.invalid && consent?.touched) {
+          <div class="error">This value is invalid</div>
+        }
+      </div>
+
+      <button type="submit" [disabled]="!complexForm.valid">Submit</button>
+    </form>
   </div>
 </div>
