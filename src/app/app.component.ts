@@ -1,14 +1,19 @@
 import { Component } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
-import { TestComponent } from "./components/test/test.component";
-import { NameEditorComponent } from "./components/name-editor/name-editor.component";
+import { RouterLink, RouterOutlet, RouterLinkActive, Router } from "@angular/router";
 
 @Component({
   selector: "app-root",
-  imports: [RouterOutlet, TestComponent, NameEditorComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.scss",
 })
 export class AppComponent {
   title = "interview-master";
+
+  constructor(private router: Router) {}
+
+  // program navigation
+  goToHome() {
+    this.router.navigate(["/"]);
+  }
 }
