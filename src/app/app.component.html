@@ -1,4 +1,25 @@
 <p>This is app!</p>
 
-<app-test></app-test>
-<app-name-editor></app-name-editor>
+<nav>
+  <ul>
+    <li>
+      <a routerLink="/home" routerLinkActive="active">Home</a>
+    </li>
+    <li>
+      <a routerLink="/angular" routerLinkActive="active">Angular</a>
+    </li>
+    <li>
+      <a routerLink="/typescript" routerLinkActive="active">Typescript</a>
+    </li>
+    <li>
+      <a routerLink="/javascript" routerLinkActive="active">Javascript</a>
+    </li>
+    <li>
+      <a routerLink="/rxjs" routerLinkActive="active">Rxjs</a>
+    </li>
+  </ul>
+</nav>
+
+<button type="button" (click)="goToHome()">To home</button>
+
+<router-outlet></router-outlet>
