@@ -1,25 +1,20 @@
-<p>This is app!</p>
+<mat-sidenav-container class="container">
+  <mat-sidenav #sidenav mode="side" class="sidenav" opened="true">
+    <div class="side-bar-title">
+      <h2>Categories</h2>
+      <app-left-side-menu></app-left-side-menu>
+    </div>
+  </mat-sidenav>
 
-<nav>
-  <ul>
-    <li>
-      <a routerLink="/home" routerLinkActive="active">Home</a>
-    </li>
-    <li>
-      <a routerLink="/angular" routerLinkActive="active">Angular</a>
-    </li>
-    <li>
-      <a routerLink="/typescript" routerLinkActive="active">Typescript</a>
-    </li>
-    <li>
-      <a routerLink="/javascript" routerLinkActive="active">Javascript</a>
-    </li>
-    <li>
-      <a routerLink="/rxjs" routerLinkActive="active">Rxjs</a>
-    </li>
-  </ul>
-</nav>
-
-<button type="button" (click)="goToHome()">To home</button>
-
-<router-outlet></router-outlet>
+  <mat-sidenav-content>
+    <mat-toolbar class="toolbar-content">
+      <a mat-list-item>Interview preparation</a>
+      <span class="spacer"></span>
+      <app-user-panel></app-user-panel>
+    </mat-toolbar>
+    <app-top-menu></app-top-menu>
+    <main>
+      <app-preparation></app-preparation>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
