@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
+import { MatDialog } from "@angular/material/dialog";
+
 import { TruncatePipe } from "../../pipes/truncate.pipe";
 import { QuestionItem } from "../category/category.component.config";
 import { MOCK_DATA } from "./preparation.component.config";
-import { MatDialog } from "@angular/material/dialog";
 import { GenerateAnswerModalComponent } from "../generate-answer-modal/generate-answer-modal.component";
 import { DeleteConfirmationModalComponent } from "../delete-confirmation-modal/delete-confirmation-modal.component";
 

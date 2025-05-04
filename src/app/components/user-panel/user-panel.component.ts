@@ -19,16 +19,17 @@ export class UserPanelComponent {
   constructor(private dialog: MatDialog) {}
 
   signOut(): void {
-    // TODO: Implement sign out logic
+    // Implement Signout
   }
 
   openSignInModal(): void {
     const dialogRef = this.dialog.open(SignInModalComponent, {
       width: "400px",
     });
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // TODO: Implement service
+        // Call the service
       }
     });
   }
@@ -37,9 +38,10 @@ export class UserPanelComponent {
     const dialogRef = this.dialog.open(SignUpModalComponent, {
       width: "400px",
     });
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // TODO: Implement service
+        // Call the service
       }
     });
   }
