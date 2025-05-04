@@ -1,15 +1,25 @@
-a {
-  cursor: pointer;
-  text-decoration: none;
-  color: black;
+.container {
+  height: 100%;
 }
 
-ul, ol {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.sidenav {
+  width: 200px;
 }
 
-.active {
-  color: #47785E;
+.content {
+  padding: 20px;
+}
+
+.side-bar-title {
+  padding: 16px;
+}
+
+.toolbar-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }
