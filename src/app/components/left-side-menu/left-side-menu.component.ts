@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { MatListModule, MatNavList } from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-left-side-menu',
-  imports: [MatListModule],
+  standalone: true,
+  imports: [MatListModule, RouterModule],
   templateUrl: './left-side-menu.component.html',
-  styleUrl: './left-side-menu.component.scss'
+  styleUrl: './left-side-menu.component.scss',
 })
-export class LeftSideMenuComponent {
-
-}
+export class LeftSideMenuComponent {}

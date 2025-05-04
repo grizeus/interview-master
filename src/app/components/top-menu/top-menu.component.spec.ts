@@ -11,7 +11,7 @@ describe('TopMenuComponent', () => {
       imports: [TopMenuComponent]
     })
     .compileComponents();
-
+    
     fixture = TestBed.createComponent(TopMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

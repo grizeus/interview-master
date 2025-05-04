@@ -11,7 +11,7 @@ describe('DeleteConfirmationModalComponent', () => {
       imports: [DeleteConfirmationModalComponent]
     })
     .compileComponents();
-
+    
     fixture = TestBed.createComponent(DeleteConfirmationModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
