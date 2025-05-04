@@ -1,17 +1,19 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { MatTabChangeEvent, MatTabsModule } from "@angular/material/tabs";
-import { ActivatedRoute, Router, RouterModule } from "@angular/router";
-import { Subject, takeUntil } from "rxjs";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-  selector: "app-top-menu",
+  selector: 'app-top-menu',
+  standalone: true,
   imports: [MatTabsModule, RouterModule],
-  templateUrl: "./top-menu.component.html",
-  styleUrl: "./top-menu.component.scss",
+  templateUrl: './top-menu.component.html',
+  styleUrls: ['./top-menu.component.scss'],
 })
 export class TopMenuComponent implements OnInit, OnDestroy {
   public tabIndex = 0;
-  public tabs = ["Angular", "TypeScript", "JavaScript", "RxJS"];
+  public tabs = ['Angular', 'TypeScript', 'JavaScript', 'RxJS'];
 
   private destroy$ = new Subject<void>();
 
@@ -21,21 +23,26 @@ export class TopMenuComponent implements OnInit, OnDestroy {
     if (this.tabIndex === event.index) {
       return;
     }
+
     this.tabIndex = event.index;
     const tabName = event?.tab?.textLabel?.toLowerCase();
-
-    this.router.navigate(["preparation"], {
+    this.router.navigate(['/preparation'], {
       relativeTo: this.route,
       queryParams: { tabIndex: this.tabIndex, tabName },
     });
   }
 
   ngOnInit(): void {
-    this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe((queryParams) => {
-      if (queryParams['tabIndex'] && this.tabIndex !== Number(queryParams['tabIndex'])) {
-        this.tabIndex = Number(queryParams['tabIndex']);
-      }
-    });
+    this.route.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((queryParams) => {
+        if (
+          queryParams['tabIndex'] &&
+          this.tabIndex !== +queryParams['tabIndex']
+        ) {
+          this.tabIndex = +queryParams['tabIndex'];
+        }
+      });
   }
 
   ngOnDestroy(): void {

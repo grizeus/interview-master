@@ -11,7 +11,7 @@ describe('LeftSideMenuComponent', () => {
       imports: [LeftSideMenuComponent]
     })
     .compileComponents();
-
+    
     fixture = TestBed.createComponent(LeftSideMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

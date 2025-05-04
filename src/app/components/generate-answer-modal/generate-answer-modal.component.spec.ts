@@ -11,7 +11,7 @@ describe('GenerateAnswerModalComponent', () => {
       imports: [GenerateAnswerModalComponent]
     })
     .compileComponents();
-
+    
     fixture = TestBed.createComponent(GenerateAnswerModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
