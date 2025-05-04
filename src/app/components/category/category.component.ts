@@ -5,38 +5,64 @@ import { QuestionItem, MOCK_DATA } from "./category.component.config";
 import { MatDialog } from "@angular/material/dialog";
 import { DeleteConfirmationModalComponent } from "../delete-confirmation-modal/delete-confirmation-modal.component";
 import { ActivatedRoute } from "@angular/router";
-import { Subject, takeUntil } from "rxjs";
+import { Subject, switchMap, takeUntil } from "rxjs";
 import { get } from "lodash";
 import { TruncatePipe } from "../../pipes/truncate.pipe";
+import { CategoriesService } from "../../services/categories.service";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @Component({
   selector: "app-category",
   standalone: true,
-  imports: [MatTableModule, MatButtonModule, TruncatePipe],
+  imports: [
+    MatTableModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    TruncatePipe,
+  ],
   templateUrl: "./category.component.html",
   styleUrl: "./category.component.scss",
 })
 export class CategoryComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ["position", "question", "answer", "actions"];
   dataSource = new MatTableDataSource<QuestionItem>();
+  category: string = "";
+  isLoading: boolean = false;
 
   private destroy$ = new Subject<void>();
 
-  constructor(public dialog: MatDialog, private route: ActivatedRoute) {}
+  constructor(
+    public dialog: MatDialog,
+    public categoriesService: CategoriesService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe((param) => {
-      // TODO - use service instead of mocks
-      const mocks = get(MOCK_DATA, param.get("categoryId") || "");
-      if (mocks) {
-        this.dataSource = mocks;
-      }
-    });
+    this.route.paramMap
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap((param) => {
+          this.category = param.get("categoryId") || "";
+          return this.categoriesService.getQuestionsByCategory(this.category);
+        })
+      )
+      .subscribe((response) => {
+        this.isLoading = false;
+        this.dataSource.data = get(MOCK_DATA, this.category);
+      });
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  deleteAnswer(categoryName: string, id: number): void {
+    this.categoriesService
+      .deleteCategoryQuestionById(categoryName, id)
+      .subscribe((response) => {
+        console.log(response);
+      });
   }
 
   openDeleteDialog(question: QuestionItem): void {
@@ -48,7 +74,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
       console.log("The dialog was closed", result);
       if (result) {
         console.log("Question would be deleted.", question);
-        // TODO - call the service for deleting an answer
+        this.deleteAnswer(this.category, question.id);
       }
     });
   }
