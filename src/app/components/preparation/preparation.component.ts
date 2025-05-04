@@ -1,25 +1,45 @@
-import { Component } from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
+import { MatButtonModule } from "@angular/material/button";
 import { MatDialog } from "@angular/material/dialog";
+import { Subject, takeUntil } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
+import { get } from "lodash";
 
-import { TruncatePipe } from "../../pipes/truncate.pipe";
-import { QuestionItem } from "../category/category.component.config";
-import { MOCK_DATA } from "./preparation.component.config";
-import { GenerateAnswerModalComponent } from "../generate-answer-modal/generate-answer-modal.component";
 import { DeleteConfirmationModalComponent } from "../delete-confirmation-modal/delete-confirmation-modal.component";
+import { MOCK_DATA, QuestionItem } from "../category/category.component.config";
+import { GenerateAnswerModalComponent } from "../generate-answer-modal/generate-answer-modal.component";
 
 @Component({
   selector: "app-preparation",
-  imports: [MatTableModule, MatButtonModule, TruncatePipe],
+  imports: [MatTableModule, MatButtonModule],
   templateUrl: "./preparation.component.html",
   styleUrl: "./preparation.component.scss",
 })
-export class PreparationComponent {
+export class PreparationComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ["position", "question", "actions"];
-  dataSource = new MatTableDataSource<QuestionItem>(MOCK_DATA);
+  dataSource = new MatTableDataSource<QuestionItem>();
 
-  constructor(public dialog: MatDialog) {}
+  private destroy$ = new Subject<void>();
+
+  constructor(public dialog: MatDialog, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.route.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((queryParams) => {
+        // TODO - use service instead of mocks
+        const mocks = get(MOCK_DATA, queryParams["tabName"]);
+        if (mocks) {
+          this.dataSource = mocks;
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   openGenerateDialog(question: QuestionItem): void {
     const dialogRef = this.dialog.open(GenerateAnswerModalComponent, {
