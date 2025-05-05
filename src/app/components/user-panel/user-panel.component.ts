@@ -27,7 +27,9 @@ export class UserPanelComponent implements OnInit {
       map((token) => {
         if (token) {
           const parsedToken = jwtDecode(token) as any;
-          return { email: parsedToken?.email };
+          return {
+            email: parsedToken?.email,
+          };
         } else {
           return null;
         }
@@ -35,9 +37,7 @@ export class UserPanelComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   signOut(): void {
     this.storageService.removeToken();
@@ -47,23 +47,11 @@ export class UserPanelComponent implements OnInit {
     const dialogRef = this.dialog.open(SignInModalComponent, {
       width: "400px",
     });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        // Call the service
-      }
-    });
   }
 
   openSignUpModal(): void {
     const dialogRef = this.dialog.open(SignUpModalComponent, {
       width: "400px",
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        // Call the service
-      }
     });
   }
 }

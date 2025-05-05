@@ -31,5 +31,4 @@ import { UserPanelComponent } from "./components/user-panel/user-panel.component
   styleUrl: "./app.component.scss",
 })
 export class AppComponent {
-  title = "interview-master";
 }
