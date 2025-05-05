@@ -55,15 +55,19 @@ export class PreparationComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  updateAnswer(
-    categoryName: string,
-    question: Partial<QuestionItem>,
-    id: number
-  ): void {
+  updateAnswer(question: Partial<QuestionItem>, id: number): void {
     this.preparationService
-      .updatePreparationQuestionById(categoryName, question, id)
+      .updatePreparationQuestionById(question, id)
+      .pipe(
+        switchMap(() =>
+          this.preparationService.getPreparationQuestionsByCategory(
+            this.category
+          )
+        )
+      )
       .subscribe((response) => {
         console.log(response);
+        this.dataSource = response.data as any;
       });
   }
 
@@ -79,7 +83,7 @@ export class PreparationComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((result: string) => {
       console.log("The dialog was closed", result);
       if (result) {
-        this.updateAnswer(this.category, { answer: result }, question.id);
+        this.updateAnswer({ answer: result }, question.id);
       }
     });
   }
@@ -101,6 +105,16 @@ export class PreparationComponent implements OnInit, OnDestroy {
   deleteAnswer(categoryName: string, id: number): void {
     this.preparationService
       .deletePreparationQuestionById(categoryName, id)
-      .subscribe((response) => console.log(response));
+      .pipe(
+        switchMap(() =>
+          this.preparationService.getPreparationQuestionsByCategory(
+            categoryName
+          )
+        )
+      )
+      .subscribe((response) => {
+        console.log(response);
+        this.dataSource = response.data as any;
+      });
   }
 }
