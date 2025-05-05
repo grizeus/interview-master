@@ -1,41 +1,36 @@
-import { Injectable } from '@angular/core';
-import { delay, map, Observable, of } from 'rxjs';
-import { MOCK_DATA, QuestionItem } from '../components/category/category.component.config';
-import { HttpClient } from '@angular/common/http';
-import { get } from 'lodash';
-import { Response, ResponseArray } from '../models/response.models';
+import { Injectable } from "@angular/core";
+import { delay, map, Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+
+import { QuestionItem } from "../components/category/category.component.config";
+import { Response, ResponseArray } from "../models/response.models";
 
 @Injectable({
   providedIn: "root",
 })
 export class CategoriesService {
-  public baseUrl = "http://localhost:4200";
+  public baseUrl = "http://localhost:3000";
 
   constructor(private http: HttpClient) {}
 
   getQuestionsByCategory(
     categoryName: string
   ): Observable<ResponseArray<QuestionItem>> {
-    return of(get(MOCK_DATA, categoryName)).pipe(
-      map((questions) => ({
-        data: [...questions],
-      })),
-      delay(500)
-    );
-
-    // return this.http.get<ResponseArray<QuestionItem>>(
-    //   `${this.baseUrl}/category/${categoryName}`
-    // );
+    return this.http
+      .get<ResponseArray<QuestionItem>>(
+        `${this.baseUrl}/category/${categoryName}`
+      )
+      .pipe(
+        map((responce: any) => {
+          return { data: responce[0]?.questions || [] };
+        }),
+        delay(500)
+      );
   }
 
-  deleteCategoryQuestionById(
-    categoryName: string,
-    id: number
-  ): Observable<Response<QuestionItem>> {
-    return of();
-
-    // return this.http.delete<Response<QuestionItem>>(
-    //   `${this.baseUrl}/category/${categoryName}/${id}`
-    // );
+  deleteCategoryQuestionById(id: number): Observable<Response<QuestionItem>> {
+    return this.http.delete<Response<QuestionItem>>(
+      `${this.baseUrl}/664/questions/${id}`
+    );
   }
 }

@@ -5,15 +5,15 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'app-top-menu',
+  selector: "app-top-menu",
   standalone: true,
   imports: [MatTabsModule, RouterModule],
-  templateUrl: './top-menu.component.html',
-  styleUrls: ['./top-menu.component.scss'],
+  templateUrl: "./top-menu.component.html",
+  styleUrls: ["./top-menu.component.scss"],
 })
 export class TopMenuComponent implements OnInit, OnDestroy {
   public tabIndex = 0;
-  public tabs = ['Angular', 'TypeScript', 'JavaScript', 'RxJS'];
+  public tabs = ["Angular", "TypeScript", "JavaScript", "RxJS"];
 
   private destroy$ = new Subject<void>();
 
@@ -26,7 +26,7 @@ export class TopMenuComponent implements OnInit, OnDestroy {
 
     this.tabIndex = event.index;
     const tabName = event?.tab?.textLabel?.toLowerCase();
-    this.router.navigate(['/preparation'], {
+    this.router.navigate(["/preparation"], {
       relativeTo: this.route,
       queryParams: { tabIndex: this.tabIndex, tabName },
     });
@@ -37,10 +37,10 @@ export class TopMenuComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((queryParams) => {
         if (
-          queryParams['tabIndex'] &&
-          this.tabIndex !== +queryParams['tabIndex']
+          queryParams["tabIndex"] &&
+          this.tabIndex !== +queryParams["tabIndex"]
         ) {
-          this.tabIndex = +queryParams['tabIndex'];
+          this.tabIndex = +queryParams["tabIndex"];
         }
       });
   }
