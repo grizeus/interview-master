@@ -1,15 +1,14 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { MatButtonModule } from "@angular/material/button";
-import { QuestionItem, MOCK_DATA } from "./category.component.config";
+import { QuestionItem } from "./category.component.config";
 import { MatDialog } from "@angular/material/dialog";
 import { DeleteConfirmationModalComponent } from "../delete-confirmation-modal/delete-confirmation-modal.component";
 import { ActivatedRoute } from "@angular/router";
 import { Subject, switchMap, takeUntil } from "rxjs";
-import { get } from "lodash";
-import { TruncatePipe } from "../../pipes/truncate.pipe";
 import { CategoriesService } from "../../services/categories.service";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { TruncatePipe } from "../../pipes/truncate.pipe";
 
 @Component({
   selector: "app-category",
@@ -27,7 +26,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ["position", "question", "answer", "actions"];
   dataSource = new MatTableDataSource<QuestionItem>();
   category: string = "";
-  isLoading: boolean = false;
+  isLoading = false;
 
   private destroy$ = new Subject<void>();
 
@@ -43,12 +42,13 @@ export class CategoryComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
         switchMap((param) => {
           this.category = param.get("categoryId") || "";
+          this.isLoading = true;
           return this.categoriesService.getQuestionsByCategory(this.category);
         })
       )
       .subscribe((response) => {
         this.isLoading = false;
-        this.dataSource.data = get(MOCK_DATA, this.category);
+        this.dataSource = response.data as any;
       });
   }
 

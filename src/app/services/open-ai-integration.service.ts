@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { map, Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -17,7 +17,11 @@ export class OpenAiIntegrationService {
       Authorization: `Bearer ${this.apiKey}`,
     });
 
-    const systemPrompt = "Згенеруй мені відповідь для наступного запитання: ";
+    const systemPrompt = `
+      You are expert in answering questions about the following topic: Angular,
+      TypeScript, JavaScript, Tailwind CSS, RxJS, and other related technologies.
+      Please explain the following question in a clear and concise manner,
+       providing relevant examples and context where necessary.`;
 
     const body = {
       model: "gpt-3.5-turbo",
