@@ -27,6 +27,9 @@ export class SignInService {
           if (response.accessToken) {
             this.storageService.setToken(response.accessToken);
           }
+          if (response.user.firstName) {
+            this.storageService.setFirstName(response.user.firstName);
+          }
         })
       );
   }
