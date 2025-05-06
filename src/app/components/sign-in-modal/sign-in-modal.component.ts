@@ -34,8 +34,6 @@ export class SignInModalComponent {
   onSubmit() {
     if (this.signInForm.valid) {
       const { email, password } = this.signInForm.value;
-      console.log("Email:", email);
-      console.log("Password:", password);
       this.signInService.login(email, password).subscribe(() => {
         this.dialogRef.close(this.signInForm.value);
       });
