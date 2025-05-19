@@ -1,27 +1,95 @@
-# InterviewMaster
+# Interview Master
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.6.
+A comprehensive Angular application designed to help developers prepare for technical interviews. This application provides a collection of interview questions and answers across various technical categories including Angular, TypeScript, JavaScript, and RxJS.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Category-based Questions**: Browse questions organized by technology categories
+- **Preparation Mode**: Special preparation mode to help you study effectively
+- **Modern UI**: Built with Angular Material for a clean, responsive interface
+- **Backend Integration**: Uses JSON Server with authentication for data management
 
-## Code scaffolding
+## Application Screenshot
+
+Below is a screenshot of the application interface showing the main question listing page with categories:
+
+![Interview Master Application Screenshot](public/img/image.png)
+
+*The screenshot shows the application's interface with question categories, a list of Angular interview questions in Ukrainian, and user management features.*
+
+## Tech Stack
+
+- **Frontend**: Angular 19.2.9 with Angular Material
+- **Backend**: JSON Server with authentication
+- **Authentication**: JWT-based authentication
+- **Styling**: SCSS for advanced styling capabilities
+
+## Prerequisites
+
+- Node.js (latest LTS version recommended)
+- npm or Bun package manager
+
+## Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```
+   npm install
+   ```
+   or if using Bun:
+   ```
+   bun install
+   ```
+
+## Running the Application
+
+The application consists of both frontend and backend components. You can start both simultaneously with:
+
+```
+npm start
+```
+
+This will:
+- Start the Angular frontend on `http://localhost:4200`
+- Start the JSON Server backend on `http://localhost:3000`
+
+### Running Components Separately
+
+- Frontend only: `npm run start:frontend`
+- Backend only: `npm run start:backend`
+
+## Building for Production
+
+```
+npm run build:prod
+```
+
+The build artifacts will be stored in the `dist/` directory.
+
+## Development
+
+### Code Scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+### Running Tests
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `npm test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running unit tests
+## Deployment
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+The application is configured for deployment on Netlify with the included `netlify.toml` configuration file.
 
-## Running end-to-end tests
+## Project Structure
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- `src/app/components`: Angular components
+- `src/app/services`: Services for data management and business logic
+- `src/app/models`: Data models and interfaces
+- `src/app/directives`: Custom directives
+- `src/app/pipes`: Custom pipes
+- `server/db.json`: Backend database with questions and categories
+- `server/routes.json`: API route configuration
 
-## Further help
+## License
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+This project is licensed under the MIT License.
